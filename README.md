@@ -36,7 +36,7 @@ https://se.ifmo.ru/courses/web), изначально планируя его п
 2. Класс JsonAreasConfigParser.
 3. Класс AreaFactory.
 
-Для автоматического создания областей используется класс ```java CheckoutManager```. Пример использования:
+Для автоматического создания областей используется класс ```CheckoutManager```. Пример использования:
 ```java
 String areasPath;
         try {
@@ -58,7 +58,7 @@ String areasPath;
 ```
 {
   "areas": [
-    {formula
+    {
       "type": "<тип области>",
       параметры...
     },
