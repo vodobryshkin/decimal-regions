@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CheckoutManager {
     private final AreaContext areaContext;
-    private final AreasRequest areasRequest;
+    private AreasRequest areasRequest;
 
     public CheckoutManager(String configName) throws IOException {
         areaContext = new AreaContext();
@@ -38,5 +38,9 @@ public class CheckoutManager {
         }
 
         return status;
+    }
+
+    public void updateAreasData(InputStream inputStream) throws IOException {
+        areasRequest = new JsonAreasConfigParser().parse(inputStream);
     }
 }

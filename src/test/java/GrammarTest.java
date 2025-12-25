@@ -13,7 +13,7 @@ import java.util.Map;
 public class GrammarTest {
     @Test
     public void test1() {
-        String input = "x + 2*y >= 10 && sin(x) + r != 0";
+        String input = "x^2=1";
 
         CharStream cs = CharStreams.fromString(input);
         ConstraintsLexer lexer = new ConstraintsLexer(cs);
