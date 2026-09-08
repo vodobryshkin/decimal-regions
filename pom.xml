@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="
+             http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.vodobryshkin</groupId>
@@ -10,16 +13,11 @@
     <packaging>jar</packaging>
 
     <name>Decimal Regions</name>
-    <description>Java library for defining and evaluating geometric regions using BigDecimal and mathematical expressions</description>
+    <description>
+        Java library for defining and evaluating geometric regions
+        using BigDecimal and mathematical expressions
+    </description>
     <url>https://github.com/vodobryshkin/decimal-regions</url>
-
-    <distributionManagement>
-        <repository>
-            <id>gh-big-decimal</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/vodobryshkin/big-decimal-lib</url>
-        </repository>
-    </distributionManagement>
 
     <licenses>
         <license>
@@ -29,14 +27,38 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <id>vodobryshkin</id>
+            <name>vodobryshkin</name>
+            <url>https://github.com/vodobryshkin</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>
+            scm:git:https://github.com/vodobryshkin/decimal-regions.git
+        </connection>
+        <developerConnection>
+            scm:git:ssh://git@github.com/vodobryshkin/decimal-regions.git
+        </developerConnection>
+        <url>https://github.com/vodobryshkin/decimal-regions</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <maven.compiler.release>11</maven.compiler.release>
-        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
 
-        <surefire.version>3.2.5</surefire.version>
-        <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
+        <maven.compiler.plugin.version>3.16.0</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>3.6.0</maven.surefire.plugin.version>
+        <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
+        <maven.javadoc.plugin.version>3.12.0</maven.javadoc.plugin.version>
+        <maven.gpg.plugin.version>3.2.8</maven.gpg.plugin.version>
+        <central.publishing.plugin.version>0.11.0</central.publishing.plugin.version>
+
+        <antlr.version>4.13.1</antlr.version>
     </properties>
 
     <dependencies>
@@ -56,7 +78,13 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
-            <version>4.13.1</version>
+            <version>${antlr.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.obermuhlner</groupId>
+            <artifactId>big-math</artifactId>
+            <version>2.3.2</version>
         </dependency>
 
         <dependency>
@@ -64,12 +92,6 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.2</version>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.obermuhlner</groupId>
-            <artifactId>big-math</artifactId>
-            <version>2.3.2</version>
         </dependency>
     </dependencies>
 
@@ -87,29 +109,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.version}</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.plugin.version}</version>
-                <configuration>
-                    <source>11</source>
-                    <encoding>UTF-8</encoding>
-                    <doclint>none</doclint>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.13.1</version>
+                <version>${antlr.version}</version>
                 <executions>
                     <execution>
+                        <id>generate-antlr-sources</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>antlr4</goal>
@@ -121,6 +133,71 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${central.publishing.plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>false</autoPublish>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
