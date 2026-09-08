@@ -1,10 +1,10 @@
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import org.junit.jupiter.api.Test;
-import ru.ifmo.se.gmt.parser.ConstraintsLexer;
-import ru.ifmo.se.gmt.parser.ConstraintsParser;
-import ru.ifmo.se.gmt.visitor.EvalExprVisitor;
-import ru.ifmo.se.gmt.visitor.EvalFormulaVisitor;
+import io.github.vodobryshkin.decimalregions.parser.ConstraintsLexer;
+import io.github.vodobryshkin.decimalregions.parser.ConstraintsParser;
+import io.github.vodobryshkin.decimalregions.visitor.EvalExprVisitor;
+import io.github.vodobryshkin.decimalregions.visitor.EvalFormulaVisitor;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

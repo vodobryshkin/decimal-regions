@@ -1,15 +1,15 @@
-import ru.ifmo.se.gmt.geometry.areas.factory.creators.implementations.RectangleAreaCreator;
-import ru.ifmo.se.gmt.geometry.areas.factory.creators.implementations.SectorAreaCreator;
-import ru.ifmo.se.gmt.geometry.areas.factory.creators.implementations.TriangleAreaCreator;
-import ru.ifmo.se.gmt.geometry.areas.implementations.RectangleArea;
-import ru.ifmo.se.gmt.geometry.areas.implementations.SectorArea;
-import ru.ifmo.se.gmt.geometry.areas.implementations.TriangleArea;
-import ru.ifmo.se.gmt.geometry.areas.interfaces.Area;
-import ru.ifmo.se.gmt.geometry.model.Point;
-import ru.ifmo.se.gmt.request.implementations.areas.RectangleAreaRequest;
-import ru.ifmo.se.gmt.request.implementations.areas.SectorAreaRequest;
-import ru.ifmo.se.gmt.request.implementations.areas.TriangleAreaRequest;
-import ru.ifmo.se.gmt.request.interfaces.AreaRequest;
+import io.github.vodobryshkin.decimalregions.geometry.areas.factory.creators.implementations.RectangleAreaCreator;
+import io.github.vodobryshkin.decimalregions.geometry.areas.factory.creators.implementations.SectorAreaCreator;
+import io.github.vodobryshkin.decimalregions.geometry.areas.factory.creators.implementations.TriangleAreaCreator;
+import io.github.vodobryshkin.decimalregions.geometry.areas.implementations.RectangleArea;
+import io.github.vodobryshkin.decimalregions.geometry.areas.implementations.SectorArea;
+import io.github.vodobryshkin.decimalregions.geometry.areas.implementations.TriangleArea;
+import io.github.vodobryshkin.decimalregions.geometry.areas.interfaces.Area;
+import io.github.vodobryshkin.decimalregions.geometry.model.Point;
+import io.github.vodobryshkin.decimalregions.request.implementations.areas.RectangleAreaRequest;
+import io.github.vodobryshkin.decimalregions.request.implementations.areas.SectorAreaRequest;
+import io.github.vodobryshkin.decimalregions.request.implementations.areas.TriangleAreaRequest;
+import io.github.vodobryshkin.decimalregions.request.interfaces.AreaRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 grammar Constraints;
 
-@header { package ru.ifmo.se.gmt.parser; }
+@header { package io.github.vodobryshkin.decimalregions.parser; }
 
 formula
     : constraint (booleanSymbol constraint)* EOF

@@ -1,5 +1,5 @@
-import ru.ifmo.se.gmt.geometry.model.Point;
-import ru.ifmo.se.gmt.geometry.areas.implementations.TriangleArea;
+import io.github.vodobryshkin.decimalregions.geometry.model.Point;
+import io.github.vodobryshkin.decimalregions.geometry.areas.implementations.TriangleArea;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

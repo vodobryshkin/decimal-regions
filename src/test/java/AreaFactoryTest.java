@@ -1,9 +1,9 @@
-import ru.ifmo.se.gmt.geometry.areas.factory.AreaFactory;
-import ru.ifmo.se.gmt.geometry.areas.interfaces.Area;
+import io.github.vodobryshkin.decimalregions.geometry.areas.factory.AreaFactory;
+import io.github.vodobryshkin.decimalregions.geometry.areas.interfaces.Area;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.ifmo.se.gmt.parser.JsonAreasConfigParser;
-import ru.ifmo.se.gmt.request.implementations.messages.AreasRequest;
+import io.github.vodobryshkin.decimalregions.parser.JsonAreasConfigParser;
+import io.github.vodobryshkin.decimalregions.request.implementations.messages.AreasRequest;
 
 import java.io.IOException;
 import java.math.BigDecimal;

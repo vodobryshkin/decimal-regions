@@ -1,8 +1,8 @@
-import ru.ifmo.se.gmt.checker.CheckoutManager;
-import ru.ifmo.se.gmt.geometry.model.Point;
+import io.github.vodobryshkin.decimalregions.checker.CheckoutManager;
+import io.github.vodobryshkin.decimalregions.geometry.model.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.ifmo.se.gmt.request.implementations.messages.CheckoutRequest;
+import io.github.vodobryshkin.decimalregions.request.implementations.messages.CheckoutRequest;
 
 import java.io.IOException;
 import java.math.BigDecimal;
