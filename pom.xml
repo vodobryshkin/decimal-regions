@@ -9,7 +9,7 @@
 
     <groupId>io.github.vodobryshkin</groupId>
     <artifactId>decimal-regions</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0</version>
     <packaging>jar</packaging>
 
     <name>Decimal Regions</name>
