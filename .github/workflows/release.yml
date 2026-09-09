@@ -1,0 +1,61 @@
+name: Release to Maven Central
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: maven-central-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Publish to Maven Central
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '11'
+          cache: maven
+
+          server-id: central
+          server-username-env-var: CENTRAL_USERNAME
+          server-password-env-var: CENTRAL_PASSWORD
+
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase-env-var: GPG_PASSPHRASE
+
+      - name: Verify tag matches POM version
+        shell: bash
+        run: |
+          POM_VERSION="$(mvn help:evaluate \
+            -Dexpression=project.version \
+            -q \
+            -DforceStdout)"
+
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+
+          echo "POM version: $POM_VERSION"
+          echo "Tag version: $TAG_VERSION"
+
+          if [ "$POM_VERSION" != "$TAG_VERSION" ]; then
+            echo "ERROR: tag v$TAG_VERSION does not match pom.xml version $POM_VERSION"
+            exit 1
+          fi
+
+      - name: Build, sign and publish
+        run: mvn -B -ntp clean deploy -Prelease
+        env:
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
