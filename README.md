@@ -1,6 +1,6 @@
 # Decimal Regions
 
-[![Tests](https://github.com/vodobryshkin/decimal-regions/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/vodobryshkin/decimal-regions/actions/workflows/test.yml)
+[![Tests](https://github.com/vodobryshkin/decimal-regions/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/vodobryshkin/decimal-regions/actions/workflows/ci.yml)
 [![Checkstyle](https://github.com/vodobryshkin/decimal-regions/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/vodobryshkin/decimal-regions/actions/workflows/lint.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.vodobryshkin/decimal-regions)](https://central.sonatype.com/artifact/io.github.vodobryshkin/decimal-regions)
 [![License](https://img.shields.io/github/license/vodobryshkin/decimal-regions)](LICENSE)
