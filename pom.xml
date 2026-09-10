@@ -57,7 +57,8 @@
         <maven.javadoc.plugin.version>3.12.0</maven.javadoc.plugin.version>
         <maven.gpg.plugin.version>3.2.8</maven.gpg.plugin.version>
         <central.publishing.plugin.version>0.11.0</central.publishing.plugin.version>
-
+        <maven.checkstyle.plugin.version>3.6.0</maven.checkstyle.plugin.version>
+        <checkstyle.version>10.26.1</checkstyle.version>
         <antlr.version>4.13.1</antlr.version>
     </properties>
 
@@ -196,6 +197,45 @@
                             <autoPublish>true</autoPublish>
                             <waitUntil>published</waitUntil>
                         </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>${maven.checkstyle.plugin.version}</version>
+
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.puppycrawl.tools</groupId>
+                                <artifactId>checkstyle</artifactId>
+                                <version>${checkstyle.version}</version>
+                            </dependency>
+                        </dependencies>
+
+                        <configuration>
+                            <configLocation>google_checks.xml</configLocation>
+
+                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                            <excludeGeneratedSources>true</excludeGeneratedSources>
+
+                            <includeResources>false</includeResources>
+                            <includeTestResources>false</includeTestResources>
+
+                            <logViolationsToConsole>true</logViolationsToConsole>
+
+                            <failOnViolation>true</failOnViolation>
+                            <maxAllowedViolations>0</maxAllowedViolations>
+                            <violationSeverity>warning</violationSeverity>
+                        </configuration>
+
+                        <executions>
+                            <execution>
+                                <id>checkstyle</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

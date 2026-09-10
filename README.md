@@ -1,6 +1,7 @@
 # Decimal Regions
 
-[![CI](https://github.com/vodobryshkin/decimal-regions/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/vodobryshkin/decimal-regions/actions/workflows/ci.yml)
+[![Tests](https://github.com/vodobryshkin/decimal-regions/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/vodobryshkin/decimal-regions/actions/workflows/test.yml)
+[![Checkstyle](https://github.com/vodobryshkin/decimal-regions/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/vodobryshkin/decimal-regions/actions/workflows/lint.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.vodobryshkin/decimal-regions)](https://central.sonatype.com/artifact/io.github.vodobryshkin/decimal-regions)
 [![License](https://img.shields.io/github/license/vodobryshkin/decimal-regions)](LICENSE)
 
@@ -663,6 +664,26 @@ mvn clean verify
 - собирает основной JAR;
 - собирает sources JAR;
 - собирает Javadoc JAR.
+
+## Стиль кода
+
+Для проверки стиля используется [Checkstyle](https://checkstyle.org/) с правилами
+[Google Java Style](https://google.github.io/styleguide/javaguide.html).
+
+Проверить код локально:
+
+```shell
+mvn checkstyle:check
+```
+
+Полная проверка проекта:
+
+```shell
+mvn clean verify
+```
+
+Сборка завершается с ошибкой при наличии нарушений Checkstyle.
+Generated-код ANTLR из проверки исключён.
 
 ## License
 

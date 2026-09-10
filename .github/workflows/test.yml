@@ -1,4 +1,4 @@
-name: CI
+name: test.yml
 
 on:
   push:
@@ -13,12 +13,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: tests-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   test:
-    name: Build and test
+    name: JUnit
     runs-on: ubuntu-latest
 
     steps:
@@ -32,5 +32,5 @@ jobs:
           java-version: '11'
           cache: maven
 
-      - name: Verify
-        run: mvn -B -ntp clean verify
+      - name: Run tests
+        run: mvn -B -ntp clean test
