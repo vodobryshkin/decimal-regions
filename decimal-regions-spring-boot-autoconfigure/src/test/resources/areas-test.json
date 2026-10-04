@@ -1,0 +1,8 @@
+{
+  "areas": [
+    {
+      "type": "formula",
+      "value": "x^2+y^2<=r^2"
+    }
+  ]
+}

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="
-             http://maven.apache.org/POM/4.0.0
-             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+         child.project.url.inherit.append.path="false">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.vodobryshkin</groupId>
-    <artifactId>decimal-regions</artifactId>
-    <version>4.0.0</version>
-    <packaging>jar</packaging>
+    <artifactId>decimal-regions-parent</artifactId>
+    <version>4.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-    <name>Decimal Regions</name>
+    <name>Decimal Regions Parent</name>
+
+    <modules>
+        <module>decimal-regions-core</module>
+        <module>decimal-regions-spring-boot-autoconfigure</module>
+        <module>decimal-regions-spring-boot-starter</module>
+    </modules>
+
     <description>
         Java library for defining and evaluating geometric regions
         using BigDecimal and mathematical expressions
@@ -35,13 +41,11 @@
         </developer>
     </developers>
 
-    <scm>
-        <connection>
-            scm:git:https://github.com/vodobryshkin/decimal-regions.git
-        </connection>
-        <developerConnection>
-            scm:git:ssh://git@github.com/vodobryshkin/decimal-regions.git
-        </developerConnection>
+    <scm child.scm.connection.inherit.append.path="false"
+         child.scm.developerConnection.inherit.append.path="false"
+         child.scm.url.inherit.append.path="false">
+        <connection>scm:git:https://github.com/vodobryshkin/decimal-regions.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/vodobryshkin/decimal-regions.git</developerConnection>
         <url>https://github.com/vodobryshkin/decimal-regions</url>
         <tag>HEAD</tag>
     </scm>
@@ -60,50 +64,54 @@
         <maven.checkstyle.plugin.version>3.6.0</maven.checkstyle.plugin.version>
         <checkstyle.version>10.26.1</checkstyle.version>
         <antlr.version>4.13.1</antlr.version>
+        <spring-boot.version>4.0.0</spring-boot.version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.11.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.40</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4-runtime</artifactId>
-            <version>${antlr.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.obermuhlner</groupId>
-            <artifactId>big-math</artifactId>
-            <version>2.3.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.10.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven.checkstyle.plugin.version}</version>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <configLocation>google_checks.xml</configLocation>
+
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <excludeGeneratedSources>true</excludeGeneratedSources>
+
+                    <includeResources>false</includeResources>
+                    <includeTestResources>false</includeTestResources>
+
+                    <logViolationsToConsole>true</logViolationsToConsole>
+
+                    <failOnViolation>true</failOnViolation>
+                    <maxAllowedViolations>0</maxAllowedViolations>
+                    <violationSeverity>warning</violationSeverity>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
+
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.40</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 
@@ -114,25 +122,6 @@
                 <configuration>
                     <useModulePath>false</useModulePath>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-maven-plugin</artifactId>
-                <version>${antlr.version}</version>
-                <executions>
-                    <execution>
-                        <id>generate-antlr-sources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>antlr4</goal>
-                        </goals>
-                        <configuration>
-                            <visitor>true</visitor>
-                            <listener>true</listener>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
@@ -173,6 +162,19 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>checkstyle</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>${maven.gpg.plugin.version}</version>
                         <executions>
@@ -197,45 +199,6 @@
                             <autoPublish>true</autoPublish>
                             <waitUntil>published</waitUntil>
                         </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <version>${maven.checkstyle.plugin.version}</version>
-
-                        <dependencies>
-                            <dependency>
-                                <groupId>com.puppycrawl.tools</groupId>
-                                <artifactId>checkstyle</artifactId>
-                                <version>${checkstyle.version}</version>
-                            </dependency>
-                        </dependencies>
-
-                        <configuration>
-                            <configLocation>google_checks.xml</configLocation>
-
-                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                            <excludeGeneratedSources>true</excludeGeneratedSources>
-
-                            <includeResources>false</includeResources>
-                            <includeTestResources>false</includeTestResources>
-
-                            <logViolationsToConsole>true</logViolationsToConsole>
-
-                            <failOnViolation>true</failOnViolation>
-                            <maxAllowedViolations>0</maxAllowedViolations>
-                            <violationSeverity>warning</violationSeverity>
-                        </configuration>
-
-                        <executions>
-                            <execution>
-                                <id>checkstyle</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>

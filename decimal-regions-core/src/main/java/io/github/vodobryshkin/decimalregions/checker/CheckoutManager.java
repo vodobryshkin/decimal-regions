@@ -11,36 +11,33 @@ import java.io.InputStream;
 import java.util.List;
 
 public class CheckoutManager {
-    private final AreaContext areaContext;
-    private AreasRequest areasRequest;
+
+    private volatile AreasRequest areasRequest;
 
     public CheckoutManager(String configName) throws IOException {
-        areaContext = new AreaContext();
         areasRequest = new JsonAreasConfigParser().parse(configName);
     }
 
     public CheckoutManager(InputStream inputStream) throws IOException {
-        areaContext = new AreaContext();
         areasRequest = new JsonAreasConfigParser().parse(inputStream);
     }
 
     public boolean checkRequest(CheckoutRequest request) {
-        List<Area> areaList = new AreaFactory().createAreas(areasRequest, request.getR());
-        boolean status = false;
+        AreasRequest snapshot = areasRequest;
+        List<Area> areas =
+                new AreaFactory().createAreas(snapshot, request.getR());
 
-        for (Area area : areaList) {
-            areaContext.setGeometryArea(area);
-
-            if (areaContext.execute(request.getPoint())) {
-                status = true;
-                break;
+        for (Area area : areas) {
+            if (area.checkPoint(request.getPoint())) {
+                return true;
             }
         }
 
-        return status;
+        return false;
     }
 
     public void updateAreasData(InputStream inputStream) throws IOException {
-        areasRequest = new JsonAreasConfigParser().parse(inputStream);
+        AreasRequest next = new JsonAreasConfigParser().parse(inputStream);
+        areasRequest = next;
     }
 }
